@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TEST LOCAL</title>
+</head>
+<body>
+  <form id="form" action="" method="">
+
+    <div>
+        <label for="">Title</label>
+        <input class="Input" id="Title" type="text" >
+        <p class="E404"  id="title_Error" ></p>
+    </div>
+
+    <div>
+        <label for="">Author</label>
+        <input class="Input"  id="Author" type="text" >
+        <p class="E404" id="Author_Error"></p>
+    </div>
+  
+    <div>
+        <label for="Price">Price </label>
+        <input class="Input" id="Price" type="text" placeholder="dh"> 
+        <p class="E404" id="Price_Error" ></p>
+    </div>
+    <div>
+        <label for="Author">Author's E-mail</label>
+        <input class="Input" type="text" id="Email" >
+        <p class="E404" id="Email_Error"></p>
+    </div>
+
+    <div>
+        <input  id="date" type="date">
+        <p class="E404" id="date_Error" ></p>
+    </div>
+
+    <div>
+        <select name="language" id="language">
+            <option value=""  selected >choose language</option>
+            <option value="Francais">Francais</option>
+            <option value="Anglais">Anglais</option>
+            <option value="Arab"> Arab</option>
+        </select>
+        <p class="E404" id="language_Error" ></p>
+    </div>
+      
+       <div class="radioBtn">
+        <input value="roman" class="fontText" type="radio" id="Roman" name="textFont">
+        <label for="">roman</label> <br>
+        <input value="essai" class="fontText" type="radio" id="Essai" name="textFont">
+        <label for="">Essai </label> <br>
+        <input value="bd" class="fontText" type="radio" id="Bande-Dessinee" name="textFont">
+        <label for="">Bande-Dessinee</label>
+    </div>
+      
+    <button id="btn" type="submit">submit</button>
+    
+  <div id="newDiv">
+
+  </div>
+
+    <p class="E404" id="validation"></p>
+    
+
+    </div>
+    <table id="table" style="width: 100% ;">
+        <tr>
+          <th>Book_Title</th>
+          <th>Author_Name</th>
+          <th>Price (dh)</th>
+          <th>date</th>
+          <th>language</th>
+          <th> type </th>
+          <th>Edit / Delete </th>
+        </tr>
+        
+
+        <tbody id="tbody"> </tbody>
+      </table>
+     
+  </form>
+  <div id="book">
+    <p id="info"> </p>
+  </div>
+
+
+    <script src="main.js" ></script>
+</body>
+</html>
