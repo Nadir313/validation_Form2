@@ -21,7 +21,9 @@ Error4 = document.getElementById("date_Error"),
 
 language = document.getElementById("language"),
 Error5 = document.getElementById ("language_Error"),
-pattern = /[1-9]/,
+pattern1 = /[1-9]/,
+pattern2 = /[^@]+@[^\.]+\..+/gi,
+pattern3 = / / 
 
 printBtn = document.getElementById("print"),
 
@@ -92,20 +94,20 @@ function myClass(){
         Error2.innerHTML = "Author name is too long  "
         return false
      }
-     //isNaN(Price.value)  || Price.value == ""
-     if (Price.value.match(pattern) ){
-         console.log("it works")
-        //  Error3.innerHTML = "The price must be filled with a number  "
-        //  return false
+     if ( !pattern1.test(Price.value) ){
+        //  console.log("it works")
+         Error3.innerHTML = "The price must be filled with a number  "
+         return false
+        
      }
      if (Price.value<=0){
         Error3.innerHTML = "Your Price is negative   "
         return false
      }
-     if(Email == null){
+     if( !pattern2.test(Email.value) ){
+        //  alert("it works")
          Error6.innerHTML = "please recheck the E-mail"
          return false
-         // the email must be in regular expression  it's easy 
      }
      if (date.value == ""){
          Error4.innerHTML = "Please Enter the  Date "
@@ -120,11 +122,9 @@ function myClass(){
      return true
 
 }
-
 form.addEventListener("submit",(e)=>{
     e.preventDefault()
 })
-
 Btn.addEventListener("click",function check(e){
     e.preventDefault()
     let valid = isvalid();
