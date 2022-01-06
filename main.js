@@ -21,7 +21,9 @@ Error4 = document.getElementById("date_Error"),
 
 language = document.getElementById("language"),
 Error5 = document.getElementById ("language_Error"),
-pattern = /[1-9]/
+pattern = /[1-9]/,
+
+printBtn = document.getElementById("print"),
 
 
 newDiv =  document.getElementById("newDiv"),
@@ -31,7 +33,7 @@ radio = document.querySelector(".radioBtn"),
 checkedRadio = document.querySelector("input[name='textFont']:checked");
 
 let E404 = document.getElementsByClassName("E404"),
-array =[],
+List =[],
 data = document.getElementById("tbody"),
 p_Info = document.getElementById("info");
 
@@ -48,25 +50,31 @@ class Novel {
     }
 
     novelInfos(){
-        return "The " + this.title +" is a "+this.checkedRadio +", in "+ this.language+ ", Written by "+this.author +", and was published in "+this.date+". The price of " +this.title+ " is " +this.price+"$."
+        return "The " +  this.title +" is a "+this.checkedRadio +", in "+ this.language+ ", Written by "+this.author +", and was published in "+this.date+". The price of " +this.title+ " is " +this.price+"$."
     }
 }
+
 function myClass(){
     checkedRadio = document.querySelector("input[name='textFont']:checked");
     let BOOK = new Novel(Title.value,checkedRadio.value,language.value,Author.value,date.value,Price.value)
-    array.push(BOOK)
-    console.log(array)
+    List.push(BOOK)
+    //trie ici 
+ List.sort((a,b)=>{
+        if(a.Title.toUpperCase() < b.Title.toUpperCase()){
+            return -1 ;
+        }
+        else if(a.Title.toUpperCase() > b.Title.toUpperCase()){
+            return 1 ;
+        }
+        else {
+            return 0 ; 
+        }
+    }) ;
+    console.log(List)
     console.log(BOOK.novelInfos())
-    p_Info.innerHTML = BOOK.novelInfos()
-    //const object = new Object()
-    localStorage.setItem("newBook", JSON.stringify(array));
-    
+    p_Info.innerHTML = BOOK.novelInfos() 
+    localStorage.setItem("newBook", JSON.stringify(List));
 }
-
-
-
-
-
  function isvalid(){
     if(Title.value == ""   ){
         Error1.innerHTML = " Title is necessairy "
@@ -97,6 +105,7 @@ function myClass(){
      if(Email == null){
          Error6.innerHTML = "please recheck the E-mail"
          return false
+         // the email must be in regular expression  it's easy 
      }
      if (date.value == ""){
          Error4.innerHTML = "Please Enter the  Date "
@@ -112,13 +121,6 @@ function myClass(){
 
 }
 
-
-
-
-
-
-
-
 form.addEventListener("submit",(e)=>{
     e.preventDefault()
 })
@@ -127,12 +129,9 @@ Btn.addEventListener("click",function check(e){
     e.preventDefault()
     let valid = isvalid();
     console.log(valid)
-    
     if(!valid) return 
-    
-    checkedRadio = document.querySelector('input[name=textFont]:checked');
- 
-         Error1.style.color="green"
+        checkedRadio = document.querySelector('input[name=textFont]:checked');
+        Error1.style.color="green"
          Error1.innerHTML ="Good"
          Error2.style.color="green"
          Error2.innerHTML="Good"
@@ -149,8 +148,7 @@ Btn.addEventListener("click",function check(e){
         Cell4 = newRow.insertCell(3),
         Cell5 = newRow.insertCell(4),
         Cell6 = newRow.insertCell(5),
-        Cell7 = newRow.insertCell(6) ;
-
+        Cell7 = newRow.insertCell(6);
 
          Cell1.innerHTML = Title.value
          Cell2.innerHTML = Author.value
@@ -158,21 +156,22 @@ Btn.addEventListener("click",function check(e){
          Cell4.innerHTML = date.value
          Cell5.innerHTML = language.value
          Cell6.innerHTML= checkedRadio.value
-
-
-
-         
+        // creating delete btn
          const deleteBtn = document.createElement("button")
          deleteBtn.innerText = "Delete"
          const editBtn = document.createElement("button")
          editBtn.innerText = "Edit"
-
          Cell7.append(deleteBtn, editBtn)
 
          deleteBtn.addEventListener("click",()=>{
              let isAgree = confirm('Do you really want to delete ?')
              if(isAgree){
                 newRow.remove();
+
+                var listIndex = List.length -1 ; 
+                List.splice( listIndex,1) ;
+                // delete the new object Data
+                p_Info.innerHTML = ""
 
                 // Emty all the inputs
                 Title.value = ""
@@ -191,7 +190,6 @@ Btn.addEventListener("click",function check(e){
                 Error6.innerHTML = ""
              }
          })
-         
          editBtn.addEventListener("click",(e)=>{
              e.preventDefault()
             Title.value = Cell1.textContent
@@ -202,22 +200,17 @@ Btn.addEventListener("click",function check(e){
             checkedRadio = document.querySelector('input[value="'+Cell6.textContent+'"]')
             checkedRadio.checked = true;
 
-
             // create edit button in newDiv, it appears when I clicke the edit button in the cell 
             newDiv.innerHTML = "";
-            // console.log(newDiv)
             const updateBtn = document.createElement('button')  
             updateBtn.style.height = "30px" 
             updateBtn.style.width ="100px"         
             updateBtn.innerText = "Edit"
             newDiv.append(updateBtn)
 
-            
             updateBtn.addEventListener('click',()=>{
                 let valid = isvalid();
                 myClass();
-
-                console.log(valid)
                  if(!valid) return 
              // take values from inputs and put them in cells 
                 Cell1.innerHTML = Title.value;
@@ -227,7 +220,6 @@ Btn.addEventListener("click",function check(e){
                 Cell5.innerHTML = language.value;
                 checkedRadio = document.querySelector("input[name='textFont']:checked")
                 Cell6.innerHTML = checkedRadio.value;
-                
                 // empty all inputs
                 Title.value = ""
                 Author.value = ""
@@ -247,6 +239,12 @@ Btn.addEventListener("click",function check(e){
          
         
     });
+
+    // printBtn.addEventListener("click",()=>{
+    //     $(data).printElement();
+        
+
+    // })
 
  form.addEventListener("focus",function(event){
     event.target.style.background="lightSeaGreen ";

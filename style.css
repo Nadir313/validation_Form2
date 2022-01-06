@@ -73,11 +73,22 @@ table,th,td{
 #book{
     font-size: large;
     font-style: italic;
-    color: royalblue;
-    background-color: rgb(204, 182, 204);
+    inline-size: 1.5px;
+    color: rgb(80, 53, 55);
+    background-color: rgb(90, 137, 236);
     height: 140px;
     width: 500px;
     margin-top: 20%;
+    padding: 5px;
+    border-radius: 10px;
+}
+#print{
+    border-radius: 10px;
+    margin: 20px;
+    height: 30px;
+    width: 100px;
+    font-weight: bold;
+    
 }
 
  
