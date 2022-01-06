@@ -55,17 +55,17 @@ class Novel {
         return "The " +  this.title +" is a "+this.checkedRadio +", in "+ this.language+ ", Written by "+this.author +", and was published in "+this.date+". The price of " +this.title+ " is " +this.price+"$."
     }
 }
-
+console.log(Title.value)
 function myClass(){
     checkedRadio = document.querySelector("input[name='textFont']:checked");
     let BOOK = new Novel(Title.value,checkedRadio.value,language.value,Author.value,date.value,Price.value)
     List.push(BOOK)
     //trie ici 
- List.sort((a,b)=>{
-        if(a.Title.toUpperCase() < b.Title.toUpperCase()){
+ List.sort((book1,book2)=>{
+        if(book1.Title.toUpperCase() < book2.Title.toUpperCase()){
             return -1 ;
         }
-        else if(a.Title.toUpperCase() > b.Title.toUpperCase()){
+        else if(book1.Title.toUpperCase() > book2.Title.toUpperCase()){
             return 1 ;
         }
         else {
@@ -77,6 +77,7 @@ function myClass(){
     p_Info.innerHTML = BOOK.novelInfos() 
     localStorage.setItem("newBook", JSON.stringify(List));
 }
+
  function isvalid(){
     if(Title.value == ""   ){
         Error1.innerHTML = " Title is necessairy "
@@ -94,7 +95,7 @@ function myClass(){
         Error2.innerHTML = "Author name is too long  "
         return false
      }
-     if ( !pattern1.test(Price.value) ){
+     if ( ! Price.value.match(pattern1) ){
         //  console.log("it works")
          Error3.innerHTML = "The price must be filled with a number  "
          return false
@@ -104,7 +105,8 @@ function myClass(){
         Error3.innerHTML = "Your Price is negative   "
         return false
      }
-     if( !pattern2.test(Email.value) ){
+     console.log(Email.value)
+     if( !Email.value.match(pattern2) ){
         //  alert("it works")
          Error6.innerHTML = "please recheck the E-mail"
          return false
@@ -120,7 +122,6 @@ function myClass(){
      myClass();
 
      return true
-
 }
 form.addEventListener("submit",(e)=>{
     e.preventDefault()
@@ -157,11 +158,13 @@ Btn.addEventListener("click",function check(e){
          Cell5.innerHTML = language.value
          Cell6.innerHTML= checkedRadio.value
         // creating delete btn
+        console.log(Title.value)
+        myClass() ;
          const deleteBtn = document.createElement("button")
          deleteBtn.innerText = "Delete"
          const editBtn = document.createElement("button")
          editBtn.innerText = "Edit"
-         Cell7.append(deleteBtn, editBtn)
+         Cell7.append(deleteBtn, editBtn) 
 
          deleteBtn.addEventListener("click",()=>{
              let isAgree = confirm('Do you really want to delete ?')
